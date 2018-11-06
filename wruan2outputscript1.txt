@@ -1,2 +1,104 @@
 Warning: Using a password on the command line interface can be insecure.
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+--------------
+SHOW DATABASES
+--------------
+
+Database
+information_schema
+mysql
+performance_schema
+--------------
+DROP DATABASE IF EXISTS wruan2assign2db
+--------------
+
+--------------
+CREATE DATABASE wruan2assign2db
+--------------
+
+--------------
+GRANT USAGE ON *.* TO 'ta'@'localhost'
+--------------
+
+--------------
+DROP USER 'ta'@'localhost'
+--------------
+
+--------------
+CREATE USER 'ta'@'localhost' IDENTIFIED BY 'cs3319'
+--------------
+
+--------------
+GRANT ALL PRIVILEGES ON wruan2assign2db.* TO 'ta'@'localhost'
+--------------
+
+--------------
+FLUSH PRIVILEGES
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+--------------
+CREATE TABLE product
+(	
+	productid VARCHAR(2) NOT NULL PRIMARY KEY,
+	description VARCHAR (20) NOT NULL,
+	costperitem DECIMAL (5,2) NOT NULL,
+	numofitems INT NOT NULL
+)
+--------------
+
+--------------
+CREATE TABLE customer
+(
+	customerid VARCHAR (2) NOT NULL PRIMARY KEY,
+	firstname VARCHAR (30) NOT NULL,
+	lastname VARCHAR (30) NOT NULL,
+	city VARCHAR (15) NOT NULL,
+	phonenumber VARCHAR (8) NOT NULL
+)
+--------------
+
+--------------
+CREATE TABLE agent
+(
+	agentid VARCHAR (2) NOT NULL PRIMARY KEY,
+	firstname VARCHAR (30) NOT NULL,
+	lastname VARCHAR (30) NOT NULL,
+	city VARCHAR (15) NOT NULL,
+	commission INT NOT NULL
+)
+--------------
+
+--------------
+CREATE TABLE purchased
+(
+	customerid VARCHAR (2) NOT NULL,
+	productid VARCHAR (2) NOT NULL,
+	quantity INT NOT NULL,
+	FOREIGN KEY (customerid) REFERENCES customer (customerid),
+	FOREIGN KEY (productid) REFERENCES product (productid)
+)
+--------------
+
+--------------
+CREATE TABLE agentDeals
+(
+	agentid VARCHAR (2) NOT NULL,
+	customerid VARCHAR (2) NOT NULL,
+	FOREIGN KEY (agentid) REFERENCES agent (agentid) ON UPDATE CASCADE ON DELETE RESTRICT,
+	FOREIGN KEY (customerid) REFERENCES customer (customerid)
+)
+--------------
+
+--------------
+SHOW TABLES
+--------------
+
+Tables_in_wruan2assign2db
+agent
+agentDeals
+customer
+product
+purchased

@@ -1,2 +1,156 @@
 Warning: Using a password on the command line interface can be insecure.
-ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+--------------
+SELECT description FROM product
+--------------
+
+description
+Bike
+Socks
+Elbow Pads
+Skateboard
+Knee Pads
+Roller Blades
+Helmet
+--------------
+SELECT DISTINCT city FROM customer
+--------------
+
+city
+Bedrock
+Springfield
+Kypto
+Providence
+--------------
+SELECT * FROM agent ORDER BY city
+--------------
+
+agentid	firstname	lastname	city	commission
+33	David	Letterman	Bedrock	100
+11	Regis	Philbin	Boston	33
+22	Courtney	Cox	New York	25
+12	Rosie	Cox	Ottawa	50
+66	Rosie	ODonnell	Ottawa	100
+99	Hugh	Grant	Springfield	16
+44	William	Ruan	Toronto	54
+--------------
+SELECT firstname, lastname FROM customer WHERE city = 'Springfield'
+--------------
+
+firstname	lastname
+Monty	Burns
+Homer	Simpson
+Sideshow	Bob
+--------------
+SELECT lastname FROM customer
+	INNER JOIN agentDeals ON customer.customerid = agentDeals.customerid
+    WHERE agentDeals.agentid = '11'
+--------------
+
+lastname
+Rubble
+Flintstone
+--------------
+SELECT description FROM product WHERE description LIKE '%pad%'
+--------------
+
+description
+Elbow Pads
+Knee Pads
+--------------
+SELECT customer.lastname, product.description, purchased.quantity FROM customer
+	INNER JOIN purchased ON customer.customerid = purchased.customerid
+    INNER JOIN product ON purchased.productid = product.productid
+    WHERE quantity > 0
+--------------
+
+lastname	description	quantity
+Griffens	Elbow Pads	19
+Flintstone	Elbow Pads	2
+Flintstone	Knee Pads	2
+Simpson	Helmet	20
+Simpson	Socks	14
+Simpson	Elbow Pads	10
+Bob	Helmet	1
+Bob	Socks	2
+Bob	Knee Pads	4
+Bob	Elbow Pads	2
+--------------
+SELECT SUM(quantity) AS "Homer's Total Purchases" FROM purchased
+	INNER JOIN customer ON purchased.customerid = customer.customerid
+	WHERE firstname = 'Homer'
+--------------
+
+Homer's Total Purchases
+44
+--------------
+SELECT COUNT(customer.customerid) AS "Unique Items Purchased", SUM(purchased.quantity) AS "Total Items Purchased", customer.firstname, customer.lastname FROM purchased
+	INNER JOIN customer ON customer.customerid = purchased.customerid
+    WHERE quantity > 0
+    GROUP BY customer.firstname, customer.lastname
+--------------
+
+Unique Items Purchased	Total Items Purchased	firstname	lastname
+2	4	Fred	Flintstone
+3	44	Homer	Simpson
+1	19	Peter	Griffens
+4	9	Sideshow	Bob
+--------------
+SELECT description, numofitems FROM product
+	LEFT JOIN purchased ON product.productid = purchased.productid
+    WHERE purchased.productid IS NULL
+--------------
+
+description	numofitems
+Bike	200
+Skateboard	100
+Roller Blades	89
+--------------
+SELECT description, numofitems FROM product WHERE description NOT IN
+(
+	SELECT description FROM product
+	LEFT JOIN purchased ON product.productid = purchased.productid
+    INNER JOIN customer ON customer.customerid = purchased.customerid
+    WHERE customer.firstname = 'Fred' AND customer.lastname = 'Flintstone'
+)
+--------------
+
+description	numofitems
+Bike	200
+Socks	100
+Skateboard	100
+Roller Blades	89
+Helmet	30
+--------------
+SELECT agent.firstname, agent.lastname, customer.firstname, customer.lastname FROM agent
+	INNER JOIN agentDeals ON agent.agentid = agentDeals.agentid
+    INNER JOIN customer ON agentDeals.customerid = customer.customerid
+    WHERE agent.city = customer.city
+--------------
+
+firstname	lastname	firstname	lastname
+Hugh	Grant	Homer	Simpson
+Hugh	Grant	Monty	Burns
+--------------
+SELECT SUM(quantity) AS "Total Knee Pads Purchased" FROM purchased WHERE productid = '78'
+--------------
+
+Total Knee Pads Purchased
+6
+--------------
+SELECT description AS "Products That Have More than 3 Customers" FROM product
+	INNER JOIN purchased ON product.productid = purchased.productid
+    GROUP BY description
+    HAVING COUNT(purchased.productid) > 3
+--------------
+
+Products That Have More than 3 Customers
+Elbow Pads
+--------------
+SELECT firstname, lastname FROM customer
+	INNER JOIN purchased ON customer.customerid = purchased.customerid
+    WHERE purchased.productid = '78'
+--------------
+
+firstname	lastname
+Sideshow	Bob
+Fred	Flintstone
