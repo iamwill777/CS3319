@@ -1,6 +1,6 @@
 -- Inserts values into products
 USE wruan2assign2db;
-LOAD DATA INFILE 'loaddatafall2018.txt' INTO TABLE product FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
+LOAD DATA LOCAL INFILE 'loaddatafall2018.txt' INTO TABLE product FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n';
 INSERT INTO product VALUES ('66', 'Elbow Pads', 14.25, 120);
 INSERT INTO product VALUES ('67', 'Skateboard', 40.00, 100);
 -- Displays data
