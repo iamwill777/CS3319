@@ -16,7 +16,7 @@ SELECT DISTINCT city FROM customer
 --------------
 
 city
-Bedrock
+Boston
 Springfield
 Kypto
 Providence
@@ -70,10 +70,10 @@ Flintstone	Knee Pads	2
 Simpson	Helmet	20
 Simpson	Socks	14
 Simpson	Elbow Pads	10
-Bob	Helmet	1
-Bob	Socks	2
-Bob	Knee Pads	4
-Bob	Elbow Pads	2
+Bob	Helmet	5
+Bob	Socks	5
+Bob	Knee Pads	5
+Bob	Elbow Pads	5
 --------------
 SELECT SUM(quantity) AS "Homer's Total Purchases" FROM purchased
 	INNER JOIN customer ON purchased.customerid = customer.customerid
@@ -93,7 +93,7 @@ Unique Items Purchased	Total Items Purchased	firstname	lastname
 2	4	Fred	Flintstone
 3	44	Homer	Simpson
 1	19	Peter	Griffens
-4	9	Sideshow	Bob
+4	20	Sideshow	Bob
 --------------
 SELECT description, numofitems FROM product
 	LEFT JOIN purchased ON product.productid = purchased.productid
@@ -128,6 +128,8 @@ SELECT agent.firstname, agent.lastname, customer.firstname, customer.lastname FR
 --------------
 
 firstname	lastname	firstname	lastname
+Regis	Philbin	Barney	Rubble
+Regis	Philbin	Fred	Flintstone
 Hugh	Grant	Homer	Simpson
 Hugh	Grant	Monty	Burns
 --------------
@@ -135,7 +137,7 @@ SELECT SUM(quantity) AS "Total Knee Pads Purchased" FROM purchased WHERE product
 --------------
 
 Total Knee Pads Purchased
-6
+7
 --------------
 SELECT description AS "Products That Have More than 3 Customers" FROM product
 	INNER JOIN purchased ON product.productid = purchased.productid

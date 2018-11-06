@@ -183,8 +183,7 @@ INSERT INTO agentDeals VALUES ('11', '15')
 --------------
 
 --------------
-INSERT INTO agentDeals VALUES ('66ERROR 1054 (42S22) at line 58: Unknown column 'c.firstname' in 'where clause'
-', '31')
+INSERT INTO agentDeals VALUES ('66', '31')
 --------------
 
 --------------
@@ -207,6 +206,77 @@ UPDATE customer SET firstname = 'Wonder', lastname = 'Woman' WHERE firstname = '
 UPDATE purchased P
 	INNER JOIN customer AS C ON C.customerid = P.customerid 
     SET P.quantity = 5
-	WHERE c.firstname = 'Sideshow' and c.lastname = 'Bob'
+	WHERE C.firstname = 'Sideshow' and C.lastname = 'Bob'
 --------------
 
+--------------
+UPDATE customer C
+	INNER JOIN agentDeals AS D ON C.customerid = D.customerid
+	INNER JOIN agent AS A ON A.agentid = D.agentid
+    SET C.city = 'Boston'
+	WHERE A.firstname = 'Regis'
+--------------
+
+--------------
+SELECT * FROM product
+--------------
+
+productid	description	costperitem	numofitems
+11	Bike	150.00	200
+12	Socks	2.00	100
+66	Elbow Pads	14.25	120
+67	Skateboard	40.00	100
+78	Knee Pads	12.15	70
+88	Roller Blades	75.00	89
+99	Helmet	29.00	30
+--------------
+SELECT * FROM agent
+--------------
+
+agentid	firstname	lastname	city	commission
+11	Regis	Philbin	Boston	33
+12	Rosie	Cox	Ottawa	50
+22	Courtney	Cox	New York	25
+33	David	Letterman	Bedrock	100
+44	William	Ruan	Toronto	54
+66	Rosie	ODonnell	Ottawa	100
+99	Hugh	Grant	Springfield	16
+--------------
+SELECT * FROM customer
+--------------
+
+customerid	firstname	lastname	city	phonenumber
+10	Barney	Rubble	Boston	777-1234
+12	Monty	Burns	Springfield	789-0000
+13	Wonder	Woman	Kypto	888-1234
+14	Peter	Griffens	Providence	987-4567
+15	Fred	Flintstone	Boston	777-2345
+21	Homer	Simpson	Springfield	686-8956
+31	Sideshow	Bob	Springfield	686-5555
+--------------
+SELECT * FROM purchased
+--------------
+
+customerid	productid	quantity
+21	99	20
+21	12	14
+21	66	10
+31	99	5
+31	12	5
+31	78	5
+31	66	5
+15	66	2
+15	78	2
+14	66	19
+--------------
+SELECT * FROM agentDeals
+--------------
+
+agentid	customerid
+99	21
+99	12
+99	14
+33	13
+11	10
+11	15
+66	31
