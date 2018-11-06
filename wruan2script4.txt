@@ -1,3 +1,5 @@
+-- Use the right database
+USE wruan2assign2db;
 -- Show data in all the tables
 SELECT * FROM product;
 SELECT * FROM agent;
@@ -6,10 +8,7 @@ SELECT * FROM purchased;
 SELECT * FROM agentDeals;
 -- Creates new view of customers, the products they bought, and the total price they spent
 CREATE VIEW V AS(
-	SELECT 
-		customer.firstname, customer.lastname, 
-		product.description, product.costperitem, 
-		purchased.quantity, product.costperitem * purchased.quantity AS "Total" FROM customer
+	SELECT customer.firstname, customer.lastname, product.description, product.costperitem, purchased.quantity, product.costperitem * purchased.quantity AS "Total" FROM customer
     LEFT JOIN purchased ON customer.customerid = purchased.customerid
     LEFT JOIN product ON product.productid = purchased.productid
     ORDER BY customer.lastname
