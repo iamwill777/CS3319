@@ -58,7 +58,7 @@ UPDATE customer SET firstname = 'Wonder', lastname = 'Woman' WHERE firstname = '
 UPDATE purchased P
 	INNER JOIN customer AS C ON C.customerid = P.customerid 
     SET P.quantity = 5
-	WHERE c.firstname = 'Sideshow' and c.lastname = 'Bob';
+	WHERE C.firstname = 'Sideshow' and C.lastname = 'Bob';
 UPDATE customer C
 	INNER JOIN agentDeals AS D ON C.customerid = D.customerid
 	INNER JOIN agent AS A ON A.agentid = D.agentid
