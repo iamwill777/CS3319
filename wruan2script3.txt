@@ -1,3 +1,5 @@
+-- Use right database
+USE wruan2assign2db;
 -- Shows description of all products
 SELECT description FROM product;
 -- Shows city of all customers without repeats
